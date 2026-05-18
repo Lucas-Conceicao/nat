@@ -71,6 +71,8 @@ x.y.z.w:3389  ──► 200.100.50.10:3389 ──► 192.168.0.10:3389
    **https://nat.aulasrede.com.br**  
    > A página mostrará o **IP público** da sua conexão e a **porta** após a tradução pelo NAT (PAT/NAPT).
 
+![evidencia 01](evidencias/4.1.png)
+
 2. Obtenha o **IP do host** `nat.aulasrede.com.br` (o servidor de destino) usando:
    - **Windows (CMD/PowerShell):**  
      - `ping nat.aulasrede.com.br`  
@@ -78,6 +80,8 @@ x.y.z.w:3389  ──► 200.100.50.10:3389 ──► 192.168.0.10:3389
    - **Linux/macOS:**  
      - `ping -c 1 nat.aulasrede.com.br`  
      - `dig +short nat.aulasrede.com.br` ou `nslookup nat.aulasrede.com.br`
+
+![evidencia 02](evidencias/4.2.png)
 
 3. **Liste as conexões** do seu host filtrando pelo IP do servidor (obtido no passo 2):
    - **Windows (CMD):**  
@@ -88,7 +92,12 @@ x.y.z.w:3389  ──► 200.100.50.10:3389 ──► 192.168.0.10:3389
      `ss -tuna | grep x.y.z.w`  
      *(ou)* `netstat -tuna | grep x.y.z.w`
 
+![evidencia 03](evidencias/4.3.png)
+
 4. Identifique, nas saídas, o **socket local antes do NAT** (no seu host) e o **socket público após o NAT** (mostrado no site). Observe a **mudança de porta de origem**.
+    - Socket local: 192.168.0.16:50617
+    - Socket público: 187.21.174.234:8556
+    - Mudança da porta: Passou da porta 50617 para a porta 8556
 
 ### 4.2 O que você deve entregar
 - **Print 1:** tela do site **nat.aulasrede.com.br** mostrando IP/porta **após** o NAT.  
@@ -98,9 +107,9 @@ x.y.z.w:3389  ──► 200.100.50.10:3389 ──► 192.168.0.10:3389
 #### Modelo de Tabela – Associações NAT
 
 | Associação NAT | Socket antes do NAT (local) | Socket após o NAT (público) | Destino |
-|---|---|---|---|
-| 1 | 192.168.0.20:53124 | **200.100.50.10:49152** | x.y.z.w:443 |
-| 2 | 192.168.0.21:60412 | **200.100.50.10:49153** | x.y.z.w:443 |
+|---|--------------------|-------------------------|-------------------|
+| 1 | 192.168.0.16:50617 | **187.21.174.234:8556** | 52.252.23.178:443 |
+
 
 > **Dica:** o “antes do NAT” é o **socket local** visto pelo seu sistema (LAN); o “após o NAT” é o **socket público** exibido no site.
 
@@ -113,6 +122,8 @@ x.y.z.w:3389  ──► 200.100.50.10:3389 ──► 192.168.0.10:3389
 2. Localize a opção **NAT** e verifique se está **habilitada**.  
    - **Print (1):** capture a tela que comprova a configuração.
 
+![evidencia 04](evidencias/5.1.png)
+
 3. Em **Forwarding** → **Virtual Server**, crie uma **regra de NAT estática (DNAT/Port Forwarding)** para permitir acesso externo via **RDP (Remote Desktop Protocol)** ao host **192.168.0.10**.  
    - **Protocolo/Porta do RDP:** **TCP 3389**.  
    - Sugestões de preenchimento:  
@@ -123,6 +134,8 @@ x.y.z.w:3389  ──► 200.100.50.10:3389 ──► 192.168.0.10:3389
      - **Status/Enable:** Ativado
 
 4. **Print (2):** capture a tela mostrando a **regra criada**.
+
+![evidencia 05](evidencias/5.2.png)
 
 ### 5.2 Boas práticas (recomendado)
 - **Reserva de DHCP** para 192.168.0.10 (o IP do host interno não deve mudar).  
@@ -138,11 +151,11 @@ x.y.z.w:3389  ──► 200.100.50.10:3389 ──► 192.168.0.10:3389
 ---
 
 ## 6) Checklist para  Entrega via TEAMS (Consolidado) 
-- [ ] **Atividade 1 – Print do site** com IP/porta após NAT.  
-- [ ] **Atividade 1 – Print** do netstat/ss filtrando o IP do servidor.  
-- [ ] **Atividade 1 – Tabela** de associações NAT (modelo acima).  
-- [ ] **Atividade 2 – Print (1)**: NAT habilitado no emulador AC1750.  
-- [ ] **Atividade 2 – Print (2)**: regra de DNAT/Port Forwarding para RDP.
+- [x] **Atividade 1 – Print do site** com IP/porta após NAT.  
+- [x] **Atividade 1 – Print** do netstat/ss filtrando o IP do servidor.  
+- [x] **Atividade 1 – Tabela** de associações NAT (modelo acima).  
+- [x] **Atividade 2 – Print (1)**: NAT habilitado no emulador AC1750.  
+- [x] **Atividade 2 – Print (2)**: regra de DNAT/Port Forwarding para RDP.
 
 ---
 
